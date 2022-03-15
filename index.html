@@ -51,6 +51,12 @@
  *
  *  14-Mar-2022   TJM-MCODE  {0001}    New module for MIT xPRO - WEEK 9 Assignment.
  *  15-Mar-2022   TJM-MCODE  {0002}    Refactoring to track real bus movements.
+<<<<<<< HEAD
+=======
+ *  15-Mar-2022   TJM-MCODE  {0003}    Added Labels to each Map Marker showing: BUS #, BEARING, and STATUS.
+ *  15-Mar-2022   TJM-MCODE  {0004}    Added following of a specific BUS #, map pans to the select BUS #.
+ *  15-Mar-2022   TJM-MCODE  {0005}    Added display of event countdown to shown when the bus positions will update.
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
  *
  *
 -->
@@ -64,7 +70,11 @@
 
     <!-- #region  C S S : visual styles -->
     <style>
-
+        #txtUI_SecondsToUpdate {
+            background-color: transparent;
+            border-color: transparent;
+            color: gray;
+        }
     </style>
     <!-- #endregion -->
 
@@ -106,11 +116,24 @@
 
         <div class="map-overlay top">
             <button id="btnUI_Button1"
+<<<<<<< HEAD
                     style="font-size: 2em">Track Bus</button>
             <button id="btnUI_Button2"
                     style="font-size: 2em">Stop Tracking</button>
             <button id="btnUI_Button3"
                     style="font-size: 2em">Future...</button>
+=======
+                    style="font-size: 2em">Track Buses</button>
+            <button id="btnUI_Button2"
+                    style="font-size: 2em">Follow Bus #</button>
+            <input id="txtUI_BusNumber"
+                   style="font-size: 2em"
+                   size="5"></input>
+            <input id="txtUI_SecondsToUpdate"
+                   style="font-size: 2em"
+                   size="3"
+                   readonly="readonly"></input>
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
         </div>
     </body>
     <!-- #endregion -->
@@ -151,7 +174,11 @@
         function logUIActivity(messageData)
         {
             // handle item manipulation...
+<<<<<<< HEAD
             return messageData + " was clicked at: " + timeStamp();
+=======
+            return messageData + " event processed at: " + timeStamp();
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
         }
 
         // #endregion
@@ -161,22 +188,46 @@
          * btnUI_*_Click() - event handlers for UI buttons.
          */
 
+<<<<<<< HEAD
         // Button #1 handler
+=======
+        // Button #1 handler: TRACK
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
         function btnUI_Button1_Click(messageData1, callBack)
         {
             // Handle 'Click'...
             console.log(callBack(messageData1));
 
+<<<<<<< HEAD
             // start timed call to track buses
             trackBuses();
         }
 
         // Button #2 handler
+=======
+            // Toggle
+            if (trackingActive === true)
+            {
+                // stop
+                trackingActive = false;
+                btnUI_Button1.innerText = "Start Tracking";
+            }
+            else
+            {
+                // restart
+                trackingActive = true;
+                btnUI_Button1.innerText = "Stop Tracking";
+            }
+        }
+
+        // Button #2 handler: FOLLOW
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
         function btnUI_Button2_Click(messageData2, callBack)
         {
             // Handle 'Click'...
             console.log(callBack(messageData2));
 
+<<<<<<< HEAD
         }
 
         // Button #3 handler
@@ -185,28 +236,99 @@
             // Handle 'Click'...
             console.log(callBack(messageData3));
 
+=======
+            // Toggle
+            if (followingBus === true)
+            {
+                // stop
+                followingBus = false;
+                btnUI_Button2.innerText = "Follow Bus #";
+            }
+            else
+            {
+                // restart
+                followingBus = true;
+                btnUI_Button2.innerText = "Stop Following";
+
+                specificVehicleId = txtUI_BusNumber.value;
+
+                // pan now to selected bus
+                followSelectedBus();
+            }
+        }
+
+        /**
+         * mapUpdates() -- handles all periodic updates to the map.
+         */
+        function mapUpdates()
+        {
+            if (trackingActive)
+            {
+                pollForVehicleLocations();
+            }
+
+            if (followingBus)
+            {
+                followSelectedBus();
+            }
+
+            txtUI_SecondsToUpdate.value = REQUEST_DELAY / 1000;
+        }
+
+        /**
+         * showCountdown() -- show user time until update.
+         */
+        function showCountdown()
+        {
+            if (trackingActive)
+            {
+                if (txtUI_SecondsToUpdate.value <= 0)
+                {
+                    txtUI_SecondsToUpdate.value = REQUEST_DELAY / 1000;
+                }
+                else
+                {
+                    txtUI_SecondsToUpdate.value -= 1;
+                }
+            }
+            else
+            {
+                txtUI_SecondsToUpdate.value = 0;
+            }
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
         }
 
         // #endregion
 
         // #region  E X E C U T I O N
 
+<<<<<<< HEAD
         // Load data sources...
         pollForBusLocations();
+=======
+        // Load data sources... get initial bus locations
+        pollForVehicleLocations();
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 
         // Map Event Handlers...
         document.getElementById("btnUI_Button1")
             .addEventListener("click", () => { btnUI_Button1_Click('Button #1: Track Bus', logUIActivity); });
 
         document.getElementById("btnUI_Button2")
+<<<<<<< HEAD
             .addEventListener("click", () => { btnUI_Button2_Click('Button #2: Stop Tracking', logUIActivity); });
 
         document.getElementById("btnUI_Button3")
             .addEventListener("click", () => { btnUI_Button3_Click('Button #3: Future', logUIActivity); });
+=======
+            .addEventListener("click", () => { btnUI_Button2_Click('Button #2: Follow Bus #', logUIActivity); });
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 
         // Set Timeout Events...
 
         // Run Timed Events...
+        setInterval(mapUpdates, REQUEST_DELAY);
+        setInterval(showCountdown, 1000);
 
         // #endregion
 

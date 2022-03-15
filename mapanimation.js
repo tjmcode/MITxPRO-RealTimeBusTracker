@@ -62,8 +62,9 @@
 // #region  C O N S T A N T S
 
 // Milliseconds between map marker movements
-const MARKER_DELAY = 1000;
+const MARKER_DELAY = 200;
 
+<<<<<<< HEAD
 // This array contains the coordinates for all bus positions being tracked
 const busLocations = [
     [-71.093729, 42.359244],
@@ -79,6 +80,10 @@ const busLocations = [
     [-71.117585, 42.373016],
     [-71.118625, 42.374863],
 ];
+=======
+// Milliseconds between MBTA Data Requests
+const REQUEST_DELAY = 15000;
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 
 // Load our MapBox access token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGptY29kZSIsImEiOiJjbDByNms5YjQwMGljM2prMHBldzNpZTV6In0.6E-vpO8VyPE1BhEoo9ptIw';
@@ -87,7 +92,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGptY29kZSIsImEiOiJjbDByNms5YjQwMGljM2prMHBld
 
 // #region  P R I V A T E   F I E L D S
 
-// This is the map instance
+// This is the MapBox instance
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
@@ -95,13 +100,28 @@ var map = new mapboxgl.Map({
     zoom: 14,
 });
 
+<<<<<<< HEAD
 // This is our moving Marker in the map, initialized to the first coordinates in the array busStops.
 var marker = new mapboxgl.Marker()
     .setLngLat([busLocations[0][0], busLocations[0][1]])
     .addTo(map);
+=======
+// This array contains the coordinates for all bus positions being tracked
+// and their Map Markers
+var vehicles = [];
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 
-// index of the current bus stop
-var markerIndex = 0;
+// index to the current bus location data
+var vehicleIndex = 0;
+
+// {TBD} -- allow user to select one of the buses to follow
+var specificVehicleId = "1910";
+
+// toggled by the "Start/Stop Tracking" button
+var trackingActive = false;
+
+// toggled by the "Start/Stop Follow" button
+var followingBus = false;
 
 // #endregion
 
@@ -112,6 +132,7 @@ var markerIndex = 0;
 // #region  M E T H O D S – P U B L I C
 
 /**
+<<<<<<< HEAD
  * pollForBusLocations() -- repeatedly polls the MBTA Server for bus locations.
  *
  * @returns {side-effects} updates the 'locations' object with current bus locations.
@@ -120,11 +141,22 @@ async function pollForBusLocations()
 {
     // get the data from the Mass. Boston Transit Authority (MBTA)
     const locations = await getBusLocations();
+=======
+ * pollForVehicleLocations() -- repeatedly polls the MBTA Server for bus locations.
+ *
+ * @returns {side-effects} updates the 'locations' object with current bus locations.
+ */
+async function pollForVehicleLocations()
+{
+    // get the data from the Mass. Boston Transit Authority (MBTA)
+    const locations = await getVehicleLocations();
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 
     // write to console for debugging only
     console.log(timeStamp());
     console.log(locations);
 
+<<<<<<< HEAD
     // build the update in a new temporary variable to be transfered to 'live' object when complete
     let newBusLocations = [];
 
@@ -154,6 +186,50 @@ async function pollForBusLocations()
  * @returns {JSON} data represention teh current locations of the MBTA Buses.
  */
 async function getBusLocations()
+=======
+    let newVehicles = [];
+
+    // extract the bus locations
+    for (let locationIndex = 0; locationIndex < locations.length; locationIndex++)
+    {
+        let vehicle = locations[locationIndex];
+
+        newVehicles.push(
+            {
+                // grab teh data we care about
+                id: vehicle.attributes.label,
+                position: [vehicle.attributes.longitude, vehicle.attributes.latitude],
+                bearing: vehicle.attributes.bearing,
+                occupancy: vehicle.attributes.occupancy_status ?? "FULL",
+
+                // make a MapBox Marker
+                marker: new mapboxgl.Marker()
+                    .setLngLat([vehicle.attributes.longitude, vehicle.attributes.latitude])
+                    .setPopup(new mapboxgl.Popup({ offset: 25 })
+                        .setHTML('<ul><li>Bus #' + vehicle.attributes.label + '</li><li>Bearing:' + vehicle.attributes.bearing + '</li><li>Status:' + (vehicle.attributes.occupancy_status ?? "FULL") + '</li></ul>'))
+                    .addTo(map)
+            });
+
+        newVehicles[locationIndex].marker.label = newVehicles[locationIndex].id + ", " + newVehicles[locationIndex].status;
+    }
+
+    // remove the old markers from the map
+    for (let vehicleIndex = 0; vehicleIndex < vehicles.length; vehicleIndex++)
+    {
+        vehicles[vehicleIndex].marker.remove();
+    }
+
+    // update the 'live' data for the bus markers
+    vehicles = newVehicles;
+}
+
+/**
+ * getVehicleLocations() -- fetches Boston Bus location data.
+ *
+ * @returns {JSON} data represention the current locations of the MBTA Buses.
+ */
+async function getVehicleLocations()
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 {
     const url = 'https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip';
     const response = await fetch(url);
@@ -163,11 +239,16 @@ async function getBusLocations()
 }
 
 /**
+<<<<<<< HEAD
  * trackBuses() – moves a map marker to the next position in a fixed array of Bus Stops.
+=======
+ * followSelectedBus() – moves a map marker to the next position in a fixed array of Bus Stops.
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
  *
  * @api public
  *
  * @returns {side-effects} updates position in bus stops ('markerIndex') and updates map display.
+<<<<<<< HEAD
  *
  * @example
  *
@@ -175,14 +256,25 @@ async function getBusLocations()
  *
  */
 function trackBuses()
+=======
+ */
+function followSelectedBus()
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 {
-    setTimeout(() =>
+    for (let vehicleIndex = 0; vehicleIndex < vehicles.length; vehicleIndex++)
     {
+<<<<<<< HEAD
         // wrap back to 1st bus stop
         if (markerIndex >= busLocations.length)
+=======
+        // pan the map to the currently selected bus
+        if (vehicles[vehicleIndex].id === specificVehicleId)
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
         {
-            markerIndex = 0;
+            // follow the moving marker, pan map
+            map.panTo(vehicles[vehicleIndex].position);
         }
+<<<<<<< HEAD
 
         // set marker
         marker.setLngLat(busLocations[markerIndex]);
@@ -197,6 +289,9 @@ function trackBuses()
         trackBuses();
 
     }, MARKER_DELAY);
+=======
+    }
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 }
 
 // #endregion
@@ -209,7 +304,11 @@ function trackBuses()
 
 if (typeof module !== 'undefined')
 {
+<<<<<<< HEAD
     module.exports = { move: trackBuses };
+=======
+    module.exports = { move: trackVehicles };
+>>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 }
 
 // #endregion
