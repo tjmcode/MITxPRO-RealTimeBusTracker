@@ -1,0 +1,94 @@
+/* #region  H E A D E R */
+/* <copyright file="styles.css" company="MicroCODE Incorporated">Copyright © 2022 MicroCODE Incorporated Troy, MI</copyright><author>Timothy J. McGuire</author> */
+/* #region  P R E A M B L E */
+/* #region  D O C U M E N T A T I O N */
+/*
+ *      Title:    CSS Styles for the Real-Time Bus Tracker
+ *      Module:   Styles (./styles.css)
+ *      Project:  MIT xPRO Real-Time Bus Tracker
+ *      Customer: MIT xPRO: MERN Course
+ *      Creator:  MicroCODE Incorporated
+ *      Date:     March 2022
+ *      Author:   Timothy J McGuire
+ *
+ *      Designed and Coded: 2022 MicroCODE Incorporated
+ *
+ *      This software and related materials are the property of
+ *      MicroCODE Incorporated and contain confidential and proprietary
+ *      information. This software and related materials shall not be
+ *      duplicated, disclosed to others, or used in any way without the
+ *      written of MicroCODE Incorported.
+ *
+ *
+ *      DESCRIPTION:
+ *      ------------
+ *
+ *      This module implements the MicroCODE's Common Cascading Style Sheet (CSS) Template.
+ *      This file is copied to start all MicroCODE CSS files.
+ *      It demonstrates our desired ordering and formatting of a CSS file.
+ *
+ *
+ *      REFERENCES:
+ *      -----------
+ *
+ *      1. MIT xPRO Starter code for 'Real-Time Bus Tracker' - by Dr. Sanchez
+ *         https://student.emeritus.org/courses/3291/discussion_topics/239496?module_item_id=944654
+ *
+ *
+ *      DEMONSTRATION VIDEOS:
+ *      --------------------
+ *
+ *      1. MIT xPRO - WEEK 9 Videos
+ *         https://student.emeritus.org/courses/3291/discussion_topics/239496?module_item_id=944654
+ *
+ *
+ *
+ *      MODIFICATIONS:
+ *      --------------
+ *
+ *  Date:         By-Group:   Rev:     Description:
+ *
+ *  14-Mar-2022   TJM-MCODE  {0001}    New module for MIT xPRO - WEEK 9 Assignment.
+ *
+ *
+ */
+
+/* #endregion */
+/* #endregion */
+/* #endregion */
+
+/* #region  C S S */
+/* #region  S T Y L E S */
+
+/* #region  I D  -- highest priority */
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* #endregion */
+
+/* #region  C L A S S -- lower priority */
+
+.map-overlay {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
+
+/* #endregion */
+
+/* #region  T A G -- lowest priority */
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* #endregion */
+
+/* #endregion */
+/* #endregion */
