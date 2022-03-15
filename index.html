@@ -50,6 +50,7 @@
  *  Date:         By-Group:   Rev:     Description:
  *
  *  14-Mar-2022   TJM-MCODE  {0001}    New module for MIT xPRO - WEEK 9 Assignment.
+ *  15-Mar-2022   TJM-MCODE  {0002}    Refactoring to track real bus movements.
  *
  *
 -->
@@ -94,6 +95,7 @@
               rel="stylesheet" />
         <link href="./styles.css"
               rel="stylesheet" />
+
         <!-- #endregion -->
     </head>
     <!-- #endregion -->
@@ -101,11 +103,14 @@
     <!-- #region  B O D Y -->
     <body>
         <div id="map"></div>
+
         <div class="map-overlay top">
-            <button style="font-size: 2em"
-                    onclick="move()">
-                Show stops between MIT and Harvard
-            </button>
+            <button id="btnUI_Button1"
+                    style="font-size: 2em">Track Bus</button>
+            <button id="btnUI_Button2"
+                    style="font-size: 2em">Stop Tracking</button>
+            <button id="btnUI_Button3"
+                    style="font-size: 2em">Future...</button>
         </div>
     </body>
     <!-- #endregion -->
@@ -116,7 +121,7 @@
 
     <!-- #region  I M P O R T : shared JavaScript code -->
     <!-- Include our common MicroCODE Client Library -->
-    <!-- <script src="mcodeClient.js"></script> -->
+    <script src="mcodeClient.js"></script>
     <!-- MAPBOX API -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
     <!-- Our specific map animation code -->
@@ -140,17 +145,64 @@
 
         // #region  C A L L B A C K S
 
+        /*
+         * callback*() - callback* description.
+         */
+        function logUIActivity(messageData)
+        {
+            // handle item manipulation...
+            return messageData + " was clicked at: " + timeStamp();
+        }
+
         // #endregion
 
         // #region  E V E N T   H A N D L E R S
+        /*
+         * btnUI_*_Click() - event handlers for UI buttons.
+         */
+
+        // Button #1 handler
+        function btnUI_Button1_Click(messageData1, callBack)
+        {
+            // Handle 'Click'...
+            console.log(callBack(messageData1));
+
+            // start timed call to track buses
+            trackBuses();
+        }
+
+        // Button #2 handler
+        function btnUI_Button2_Click(messageData2, callBack)
+        {
+            // Handle 'Click'...
+            console.log(callBack(messageData2));
+
+        }
+
+        // Button #3 handler
+        function btnUI_Button3_Click(messageData3, callBack)
+        {
+            // Handle 'Click'...
+            console.log(callBack(messageData3));
+
+        }
 
         // #endregion
 
         // #region  E X E C U T I O N
 
         // Load data sources...
+        pollForBusLocations();
 
         // Map Event Handlers...
+        document.getElementById("btnUI_Button1")
+            .addEventListener("click", () => { btnUI_Button1_Click('Button #1: Track Bus', logUIActivity); });
+
+        document.getElementById("btnUI_Button2")
+            .addEventListener("click", () => { btnUI_Button2_Click('Button #2: Stop Tracking', logUIActivity); });
+
+        document.getElementById("btnUI_Button3")
+            .addEventListener("click", () => { btnUI_Button3_Click('Button #3: Future', logUIActivity); });
 
         // Set Timeout Events...
 
