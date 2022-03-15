@@ -134,7 +134,13 @@ function move()
         }
 
         // set marker
-        marker.setLngLat(busStops[markerIndex++]);
+        marker.setLngLat(busStops[markerIndex]);
+
+        // follow the moving marker, pan map
+        map.panTo(busStops[markerIndex]);
+
+        // move to next bus position
+        markerIndex++;
 
         // update Map display
         move();
