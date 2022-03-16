@@ -24,7 +24,7 @@ This repository holds my version of the "Real-time Bus Tracker" excercise from W
 
 * Demonstration of the Bus Tracker...
 
-<video id="demo-video" style="border-style:solid; border-width:2px" src="https://user-images.githubusercontent.com/8990676/156948541-4aa4e8cc-4bd8-4c28-8b2f-5de4ffda358c.mp4" width="1024" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allow="autoplay *" loop autoplay autobuffer controls muted>
+<video id="demo-video" style="border-style:solid; border-width:2px" src="https://user-images.githubusercontent.com/8990676/158492176-6917b8ce-2b35-4b26-9e87-8886f31f3998.mp4" width="1024" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allow="autoplay *" loop autoplay autobuffer controls muted>
 Your browser does not support the HTML5 player.
 </video>
 </p>
