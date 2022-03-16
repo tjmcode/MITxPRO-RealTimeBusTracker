@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-// <copyright file="mcodeClient.js" company="MicroCODE Incorporated">Copyright © 2021 MicroCODE Incorporated Troy, MI</copyright><author>Timothy J. McGuire</author>
-
-=======
 // #region  H E A D E R
 // <copyright file="mcodeClient.js" company="MicroCODE Incorporated">Copyright © 2021 MicroCODE Incorporated Troy, MI</copyright><author>Timothy J. McGuire</author>
 // #region  P R E A M B L E
 // #region  D O C U M E N T A T I O N
->>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 /*
  *      Title:    MicroCODE Common Client Function Library
  *      Module:   modules (MicroCODE:mcodeClient.js)
@@ -57,8 +52,6 @@
  */
 "use strict";
 
-<<<<<<< HEAD
-=======
 // #endregion
 // #endregion
 // #endregion
@@ -66,7 +59,6 @@
 // #region  J A V A S C R I P T
 // #region  F U N C T I O N S
 
->>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
 /**
  * timestamp() -- function to generate timestamp string: YYYY-MM-DD HH:MM:SS.mmm.
  * @returns  {String} "YYYY-MM-DD HH:MM:SS.mmm".
@@ -144,11 +136,7 @@ function listifyArray(arrayToListify)
     });
 
     return listifiedText;
-<<<<<<< HEAD
-};
-=======
 };
 
 // #endregion
 // #endregion
->>>>>>> 35bca61b4e7e76e10462c4551a8b2669763dd6fb
