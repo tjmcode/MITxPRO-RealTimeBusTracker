@@ -139,7 +139,7 @@ async function pollForVehicleLocations()
                 marker: new mapboxgl.Marker()
                     .setLngLat([vehicle.attributes.longitude, vehicle.attributes.latitude])
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML('<ul><li>Bus #' + vehicle.attributes.label + '</li><li>Bearing:' + vehicle.attributes.bearing + '</li><li>Status:' + (vehicle.attributes.occupancy_status ?? "FULL") + '</li></ul>'))
+                        .setHTML('<ul><li>Bus #' + vehicle.attributes.label + '</li><li>Bearing: ' + vehicle.attributes.bearing + '</li><li>Status:' + (vehicle.attributes.occupancy_status ?? "FULL") + '</li></ul>'))
                     .addTo(map)
             });
 
